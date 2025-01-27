@@ -97,14 +97,14 @@ void	init_img_again(t_fractol *f)
 void	init(t_fractol *f)
 {
 	f->mlx = mlx_init();
-	if (!f->mlx)
-		clean_exit(msg("MLX: error connecting to mlx.", "", 1), f);
-	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "Fractol");
-	if (!f->win)
-		clean_exit(msg("MLX: error creating window.", "", 1), f);
+	// if (!f->mlx)
+	// 	clean_exit(msg("MLX: error connecting to mlx.", "", 1), f);
+	// f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "Fractol");
+	// if (!f->win)
+	// 	clean_exit(msg("MLX: error creating window.", "", 1), f);
 	f->sx = 2.0;
 	f->rx = 0.5;
 	f->fx = 1.0;
-	get_complex_layout(f);
+	get_pxl_complex(f);
 	// color_shift(f);
 }
