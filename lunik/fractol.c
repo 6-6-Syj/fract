@@ -76,8 +76,8 @@ static void	get_julia_starting_values(t_fractol *f, int ac, char **av)
 		help_msg(f);
 	if (!ft_strchr(av[3], '.'))
 		help_msg(f);
-	f->kr = atof(av[2]);
-	f->ki = atof(av[3]);
+	f->kr = ft_atof(av[2]);
+	f->ki = ft_atof(av[3]);
 	if (f->kr > 2.0 || f->kr < -2.0)
 		help_msg(f);
 	if (f->ki >= 2.0 || f->ki <= -2.0)
@@ -108,14 +108,14 @@ int	main(int ac, char **av)
 {
 	t_fractol	f;
 
-	// if (ac < 2)
-		// help_msg(&f);
+	if (ac < 2)
+		help_msg(&f);
 	init_struct(&f); 				// init struct
-	// handle_args(&f, ac, av);
+	handle_args(&f, ac, av);		// verify args
 	init(&f); 						// init window + default values
-	render(&f);
-	print_controls();
-	// mlx_hook(f.win, EVENT_CLOSE_BTN, 0, end_fractol, &f);  // TO SEE
+	render(&f);						// render image
+	print_controls();				// prints help
+	mlx_hook(f.win, 17, 1L << 0, close_window, &f);
 	mlx_key_hook(f.win, key_event, &f);
 	mlx_mouse_hook(f.win, mouse_event, &f);
 	mlx_loop(f.mlx);

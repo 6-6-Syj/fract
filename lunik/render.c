@@ -24,12 +24,15 @@
 		- RR >> 16  (0x00RR0000)
 		- AA >> 24  (0xAA000000)
 */
+
 static void	set_pixel_color(t_fractol *f, int x, int y, int color)
 {
-		f->buf[x * 4 + y * WIDTH * 4] = color;
-		f->buf[x * 4 + y * WIDTH * 4 + 1] = color >> 8;
-		f->buf[x * 4 + y * WIDTH * 4 + 2] = color >> 16;
-		f->buf[x * 4 + y * WIDTH * 4 + 3] = color >> 24;
+	if(!f->buf)
+		ft_printf("OUPS");
+	f->buf[x * 4 + y * WIDTH * 4] = color;
+	f->buf[x * 4 + y * WIDTH * 4 + 1] = color >> 8;
+	f->buf[x * 4 + y * WIDTH * 4 + 2] = color >> 16;
+	f->buf[x * 4 + y * WIDTH * 4 + 3] = color >> 24;
 }
 
 /* calculate_fractal:
@@ -40,6 +43,7 @@ static int	calculate_fractal(t_fractol *f, double pr, double pi)
 {
 	int	nb_iter;
 
+	nb_iter = 0;
 	if (f->set == MANDELBROT)
 		nb_iter = mandelbrot(pr, pi);
 	else if (f->set == JULIA)
@@ -78,9 +82,29 @@ void	render(t_fractol *f)
 			pr = f->min_r + (double)x * (f->max_r - f->min_r) / WIDTH;
 			pi = f->max_i + (double)y * (f->min_i - f->max_i) / HEIGHT;
 			nb_iter = calculate_fractal(f, pr, pi);
-			set_pixel_color(f, x, y, f->palette[nb_iter]);
+			set_pixel_color(f, x, y, nb_iter);
 			x++;
 		}
+		y++;
 	}
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
+}
+
+int		close_window(t_fractol *f)
+{
+	if (!f)
+		exit(0);
+	if (f->palette)
+		free(f->palette);
+	if (f->img)
+		mlx_destroy_image(f->mlx, f->img);
+	if (f->win && f->mlx)
+		mlx_destroy_window(f->mlx, f->win);
+	if (f->mlx)
+	{
+		mlx_loop_end(f->mlx);
+		mlx_destroy_display(f->mlx);
+		free(f->mlx);
+	}
+	exit(0);
 }

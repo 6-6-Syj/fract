@@ -17,12 +17,14 @@
 # define WIDTH 800
 # define HEIGHT 800
 
-// FRACTAL
+// ITERATIONS
+# define MAX_ITER 50
+
+// SET
 # define MANDELBROT 1
 # define JULIA 2
 # define BURNING_SHIP 3
 # define MANDELBOX 4
-# define MAX_ITER 50
 
 // MOUSE
 # define LEFT_CLICK 1
@@ -30,7 +32,7 @@
 # define RIGHT_CLICK 3
 # define WHEEL_UP 4
 # define WHEEL_DOWN 5
-// MOUSE_BTN
+# define MOUSE_CLICK 1
 
 // KEYBOARD
 # define ESC 65307
@@ -43,8 +45,8 @@
 # define ENTER 65421
 
 // COLOR
-// # define BLACK 0x00000000
-// # define WHITE 0xFFFFBFFF
+# define BLACK 0x00000000
+# define WHITE 0xFFFFBFFF
 
 # include <stdlib.h>
 # include <math.h>
@@ -52,42 +54,56 @@
 # include "minilibx-linux/mlx.h"
 # include "minilibx-linux/mlx_int.h"
 
-typedef struct s_fractol
+// typedef union			s_color
+// {
+//     struct
+// 	{
+//         unsigned char	b;
+//         unsigned char	g;
+//         unsigned char	r;
+//         unsigned char	a;  // Alpha ()
+//     } components;
+//     unsigned int 		color;
+// } 						t_color;
+
+typedef struct 		s_fractol
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	void		*buf;
-	int			set;
-	double 		min_r;
-	double		max_r;
-	double		min_i;
-	double		max_i;
-	double		kr; // Julia
-	double		ki; // Julia
-	double		sx;
-	double		rx;
-	double		fx;
-	double		max_iter;
-}				t_fractol;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	unsigned char	*buf;
+	int				set;
+	char			*name;
+	double 			min_r;
+	double			max_r;
+	double			min_i;
+	double			max_i;
+	double			kr; // Julia
+	double			ki; // Julia
+	double			sx; // default value (init.c - init)
+	double			rx;	// default value (init.c - init)
+	double			fx;	// default value (init.c - init)
+	double			max_iter;
+	int				*palette;
+	int				color;
+	// t_color			color;
+}					t_fractol;
 
 // init.c
 void	init_struct(t_fractol *f);
-void	get_pxl_complex(t_fractol *f);
+void	get_complex_range(t_fractol *f);
 void	init(t_fractol *f);
 void	init_img_again(t_fractol *f);
 
-// madelbrot.c
+// render.c
+void	render(t_fractol *f);
+int		close_window(t_fractol *f);
+
+// sets
 int		mandelbrot(double cr, double ci);
-
-// julia.c
 int		julia(t_fractol *f, double zr, double zi);
-// int	julia_shift(int x, int y, t_fractol *f);
-
-// burningship.c
+int		julia_shift(int x, int y, t_fractol *f);
 int		burning_ship(double cr, double ci);
-
-// mandelbox.c
 int		mandelbox(t_fractol *f, double cr, double ci);
 
 //  events.c
@@ -96,8 +112,12 @@ int		mouse_event(int keycode, int x, int y, t_fractol *mlx);
 
 // messages.c
 void	print_fractal_options(void);
-void	print_color_options(void);
 void	print_controls(void);
 void	help_msg(t_fractol *f);
+void	message(t_fractol *f, char *str1, char *str2);
+
+// args
+double	ft_atof(char *str);
+void	get_color(t_fractol *f, int ac, char **av);
 
 #endif

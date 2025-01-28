@@ -28,13 +28,11 @@ SRCS =	init.c			\
 		fractol.c		\
 		render.c		\
 		events.c		\
-		mandelbrot.c	\
-		julia.c			\
-		burningship.c	\
 		mandelbox.c		\
 		colors.c		\
 		args.c			\
-		
+		messages.c		\
+		sets.c			\
 
 OBJS_DIR = obj/
 OBJS = $(SRCS:%.c=$(OBJS_DIR)%.o)
