@@ -12,27 +12,26 @@
 
 #include "fractol.h"
 
-
 #include <ctype.h>
 
 /* skip_space_sign_0x:
 *	Skips spaces, '+' sign character and '0x' or '0X'
 *	to parse hexadecimal color code strings.
 */
-static int	skip_space_sign_0x(char *color)
-{
-	int	i;
+// static int	skip_space_sign_0x(char *color)
+// {
+// 	int	i;
 
-	i = 0;
-	while (isspace(color[i]))
-		i++;
-	if (color[i] == '+')
-		i++;
-	if (color[i] == '0' && (color[i + 1]
-			&& (color[i + 1] == 'x' || color[i] == 'X')))
-		i = i + 2;
-	return (i);
-}
+// 	i = 0;
+// 	while (isspace(color[i]))
+// 		i++;
+// 	if (color[i] == '+')
+// 		i++;
+// 	if (color[i] == '0' && (color[i + 1]
+// 			&& (color[i + 1] == 'x' || color[i] == 'X')))
+// 		i = i + 2;
+// 	return (i);
+// }
 
 /* ft_atox_color:
 *	Translates a hexadecimal color code string into an integer.
@@ -41,56 +40,56 @@ static int	skip_space_sign_0x(char *color)
 *	If the string is not a valid hex color code, an error is displayed.
 *	Returns the converted int. -1 if an error occured.
 */
-static int	ft_ishexdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (c);
-	c = ft_toupper(c);
-	if (c >= 'A' && c <= 'F')
-		return (c);
-	else
-		return (0);
-}
+// static int	ft_ishexdigit(int c)
+// {
+// 	if (c >= '0' && c <= '9')
+// 		return (c);
+// 	c = ft_toupper(c);
+// 	if (c >= 'A' && c <= 'F')
+// 		return (c);
+// 	else
+// 		return (0);
+// }
 
-static int	ft_atox_color(t_fractol *f, char *color)
-{
-	int	i;
-	int	x;
-	int	n;
+// static int	ft_atox_color(t_fractol *f, char *color)
+// {
+// 	int	i;
+// 	int	x;
+// 	int	n;
 
-	n = 0;
-	i = 0;
-	i = skip_space_sign_0x(color);
-	x = 0;
-	while (color[i] && ft_ishexdigit(color[i]))
-	{
-		if (ft_isdigit(color[i]))
-			n = (n * 16) + (color[i] - '0');
-		else
-			n = (n * 16) + (ft_toupper(color[i]) - 'A' + 10);
-		i++;
-		x++;
-	}
-	if (x == 6 && !color[i])
-		return (n);
-	else
-		help_msg(f);
-	return (-1);
-}
+// 	n = 0;
+// 	i = 0;
+// 	i = skip_space_sign_0x(color);
+// 	x = 0;
+// 	while (color[i] && ft_ishexdigit(color[i]))
+// 	{
+// 		if (ft_isdigit(color[i]))
+// 			n = (n * 16) + (color[i] - '0');
+// 		else
+// 			n = (n * 16) + (ft_toupper(color[i]) - 'A' + 10);
+// 		i++;
+// 		x++;
+// 	}
+// 	if (x == 6 && !color[i])
+// 		return (n);
+// 	else
+// 		help_msg(f);
+// 	return (-1);
+// }
 
 /* get_color:
 *	Gets the color option provided as argument at program launch.
 *	If no color was specified, sets a default value to be used.
 */
-void	get_color(t_fractol *f, int ac, char **av)
-{
-	if (f->set == JULIA && ac == 5)
-		f->color = ft_atox_color(f, av[4]);
-	else if (f->set != JULIA && ac == 3)
-		f->color = ft_atox_color(f, av[2]);
-	if (ac == 2 || (f->set == JULIA && ac == 4))
-		f->color = 0x9966FF;
-}
+// void	get_color(t_fractol *f, int ac, char **av)
+// {
+// 	if (f->set == JULIA && ac == 5)
+// 		f->color = ft_atox_color(f, av[4]);
+// 	else if (f->set != JULIA && ac == 3)
+// 		f->color = ft_atox_color(f, av[2]);
+// 	if (ac == 2 || (f->set == JULIA && ac == 4))
+// 		f->color = 0x9966FF;
+// }
 
 /* skip_space_sign:
 *	Skips spaces, '+' and '-' sign characters and sets the

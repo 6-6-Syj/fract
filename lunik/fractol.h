@@ -18,7 +18,7 @@
 # define HEIGHT 800
 
 // ITERATIONS
-# define MAX_ITER 70
+# define MAX_ITER 80
 
 // SET
 # define MANDELBROT 1
@@ -45,7 +45,7 @@
 # define ENTER 65421
 
 // COLOR
-# define BLACK 0x000000FF
+# define BLACK 0x00000000
 # define WHITE 0xFFFFBFFF
 
 # include <stdlib.h>
@@ -54,24 +54,19 @@
 # include "minilibx-linux/mlx.h"
 # include "minilibx-linux/mlx_int.h"
 
-// typedef union			s_color
-// {
-//     struct
-// 	{
-//         unsigned char	b;
-//         unsigned char	g;
-//         unsigned char	r;
-//         unsigned char	a;  // Alpha ()
-//     } components;
-//     unsigned int 		color;
-// } 						t_color;
+typedef struct s_data
+{
+    void	*img;
+    char	*addr;
+    int		bits_per_pixel;
+    int		line_length;
+    int		endian;
+} 				t_data;
 
 typedef struct 		s_fractol
 {
 	void			*mlx;
 	void			*win;
-	void			*img;
-	unsigned char	*buf;
 	int				set;
 	char			*name;
 	double 			min_r;
@@ -84,8 +79,7 @@ typedef struct 		s_fractol
 	double			rx;	// default value (init.c - init)
 	double			fx;	// default value (init.c - init)
 	double			max_iter;
-	int				*palette;
-	int				color;
+	t_data			data;
 }					t_fractol;
 
 // init.c
@@ -117,6 +111,6 @@ void	message(t_fractol *f, char *str1, char *str2);
 
 // args
 double	ft_atof(char *str);
-void	get_color(t_fractol *f, int ac, char **av);
+// void	get_color(t_fractol *f, int ac, char **av);
 
 # endif

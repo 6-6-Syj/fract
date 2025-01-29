@@ -16,8 +16,6 @@ void	init_struct(t_fractol *f)
 {
 	f->mlx = NULL;
 	f->win = NULL;
-	f->img = NULL;
-	f->buf = NULL;
 	f->set = -1;
 	f->name = NULL;
 	f->min_r = 0;
@@ -30,8 +28,11 @@ void	init_struct(t_fractol *f)
 	f->rx = 0;
 	f->fx = 0;
 	f->max_iter = 0;
-	f->palette = NULL;
-	f->color = 0;
+	f->data.img = NULL;
+	f->data.addr = NULL;
+	f->data.bits_per_pixel = 0;
+	f->data.line_length = 0;
+	f->data.endian = 0;
 }
 
 void	get_complex_range(t_fractol *f)
@@ -72,49 +73,31 @@ void	get_complex_range(t_fractol *f)
 *	then be displayed in the program window.
 */
 
-	static void	init_img(t_fractol *f)
+static void	init_img(t_fractol *f)
+{
+	f->data.img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
+	if (!(f->data.img))
 	{
-		int				pixel_bits;
-		int				line_bytes;
-		int				endian;
-		unsigned char	*buf;
-
-		f->palette = ft_calloc((MAX_ITER + 1), sizeof(int));
-		if (!(f->palette))
-		{
-			ft_printf("Error initializing color");
-			close_window(f);
-		}
-		f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
-		if (!(f->img))
-		{
-			ft_printf("Error creating image");
-			close_window(f);
-		}
-		buf = (unsigned char *)mlx_get_data_addr(f->img, &pixel_bits, &line_bytes, &endian);
-		if (buf == NULL)
-		{
-	    	printf("Error mlx_get_data_addr a échoué\n");
-    		close_window(f);
-		}
-		f->buf = buf;
+		ft_printf("Error creating image");
+		close_window(f);
 	}
+}
 
 /* reinit_image:
 *	Cleanly reinitializes the MLX image if the color palette or
 *	fractal type is modified at runtime.
 */
 
-void	init_img_again(t_fractol *f)
-{
-	if (f->mlx && f->img)
-		mlx_destroy_image(f->mlx, f->img);
-	if (f->palette)
-		free(f->palette);
-	if (f->buf)
-		f->buf = NULL;
-	init_img(f);
-}
+// void	init_img_again(t_fractol *f)
+// {
+// 	if (f->mlx && f->img)
+// 		mlx_destroy_image(f->mlx, f->img);
+// 	if (f->palette)
+// 		free(f->palette);
+// 	if (f->buf)
+// 		f->buf = NULL;
+// 	init_img(f);
+// }
 
 /* init:
 *	Creates a new MLX instance, a new window and populates
