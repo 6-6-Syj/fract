@@ -56,7 +56,7 @@ void	get_complex_range(t_fractol *f)
 	{
 		if (f->set == MANDELBROT)
 			f->name = "Mandelbrot";
-		if (f->set == BURNING_SHIP)
+		else if (f->set == BURNING_SHIP)
 			f->name = "Burning Ship";
 		f->min_r = -2.0;
 		f->max_r = 1.0;
@@ -98,8 +98,6 @@ void	get_complex_range(t_fractol *f)
     		close_window(f);
 		}
 		f->buf = buf;
-		if (!(f->buf))
-			printf("Bha c'est bien");
 	}
 
 /* reinit_image:
@@ -107,39 +105,40 @@ void	get_complex_range(t_fractol *f)
 *	fractal type is modified at runtime.
 */
 
-	void	init_img_again(t_fractol *f)
-	{
-		if (f->mlx && f->img)
-			mlx_destroy_image(f->mlx, f->img);
-		if (f->palette)
-			free(f->palette);
-		if (f->buf)
-			f->buf = NULL;
-		init_img(f);
-	}
+void	init_img_again(t_fractol *f)
+{
+	if (f->mlx && f->img)
+		mlx_destroy_image(f->mlx, f->img);
+	if (f->palette)
+		free(f->palette);
+	if (f->buf)
+		f->buf = NULL;
+	init_img(f);
+}
 
 /* init:
 *	Creates a new MLX instance, a new window and populates
 *	the fractol data structure with default values.
 */
-	void	init(t_fractol *f)
-	{
-		f->mlx = mlx_init();
+void	init(t_fractol *f)
+{
+	f->mlx = mlx_init();
 
-		if (!f->mlx)
-		{
-			ft_printf("Error creating MLX instance");
-			close_window(f);
-		}
-		// f->sx = 2.0;
-		// f->rx = 0.5;
-		// f->fx = 1.0;
-		get_complex_range(f);
-		f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, f->name);
-		if (!f->win)
-		{
-			ft_printf("Error creating window");
-			close_window(f);
-		}
-		init_img(f);
+	if (!f->mlx)
+	{
+		ft_printf("Error creating MLX instance");
+		close_window(f);
 	}
+	f->sx = 2.0;
+	f->rx = 0.5;
+	f->fx = 1.0;
+	f->max_iter = MAX_ITER;
+	get_complex_range(f);
+	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, f->name);
+	if (!f->win)
+	{
+		ft_printf("Error creating window");
+		close_window(f);
+	}
+	init_img(f);
+}

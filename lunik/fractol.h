@@ -18,7 +18,7 @@
 # define HEIGHT 800
 
 // ITERATIONS
-# define MAX_ITER 50
+# define MAX_ITER 70
 
 // SET
 # define MANDELBROT 1
@@ -45,7 +45,7 @@
 # define ENTER 65421
 
 // COLOR
-# define BLACK 0x00000000
+# define BLACK 0x000000FF
 # define WHITE 0xFFFFBFFF
 
 # include <stdlib.h>
@@ -86,7 +86,6 @@ typedef struct 		s_fractol
 	double			max_iter;
 	int				*palette;
 	int				color;
-	// t_color			color;
 }					t_fractol;
 
 // init.c
@@ -120,4 +119,4 @@ void	message(t_fractol *f, char *str1, char *str2);
 double	ft_atof(char *str);
 void	get_color(t_fractol *f, int ac, char **av);
 
-#endif
+# endif

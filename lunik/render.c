@@ -27,8 +27,6 @@
 
 static void	set_pixel_color(t_fractol *f, int x, int y, int color)
 {
-	if(!f->buf)
-		ft_printf("OUPS");
 	f->buf[x * 4 + y * WIDTH * 4] = color;
 	f->buf[x * 4 + y * WIDTH * 4 + 1] = color >> 8;
 	f->buf[x * 4 + y * WIDTH * 4 + 2] = color >> 16;
@@ -82,12 +80,19 @@ void	render(t_fractol *f)
 			pr = f->min_r + (double)x * (f->max_r - f->min_r) / WIDTH;
 			pi = f->max_i + (double)y * (f->min_i - f->max_i) / HEIGHT;
 			nb_iter = calculate_fractal(f, pr, pi);
-			set_pixel_color(f, x, y, nb_iter);
+			if (nb_iter == MAX_ITER)
+                f->color = BLACK;
+    		else
+			{
+                f->color = (nb_iter * 6666 / MAX_ITER) << 8;  // Rouge en fonction des itérations
+            }
+			set_pixel_color(f, x, y, f->color);
 			x++;
 		}
 		y++;
 	}
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
+	mlx_do_sync(f->mlx);
 }
 
 int		close_window(t_fractol *f)
@@ -106,5 +111,5 @@ int		close_window(t_fractol *f)
 		mlx_destroy_display(f->mlx);
 		free(f->mlx);
 	}
-	exit(0);
+	exit(1);
 }
