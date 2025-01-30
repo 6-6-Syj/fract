@@ -12,17 +12,19 @@
 
 #include "fractol.h"
 
-int	mandelbrot(double cr, double ci)
+int	mandelbrot(t_fractol *f, double cr, double ci)
 {
 	int		n;
 	double	zr;
 	double	zi;
 	double	tmp;
+	double	max_iter;
 
 	zr = 0;
 	zi = 0;
 	n = 0;
-	while (n < MAX_ITER)
+	max_iter = f->max_iter;
+	while (n < max_iter)
 	{
 		if ((zr * zr + zi * zi) > 4.0)
 			break ;
@@ -34,17 +36,19 @@ int	mandelbrot(double cr, double ci)
 	return (n);
 }
 
-int	burning_ship(double cr, double ci)
+int	burning_ship(t_fractol *f, double cr, double ci)
 {
 	int		n;
 	double	zr;
 	double	zi;
 	double	tmp;
+	double	max_iter;
 
 	zr = 0;
 	zi = 0;
 	n = 0;
-	while (n < MAX_ITER)
+	max_iter = f->max_iter;
+	while (n < max_iter)
 	{
 		if ((zr * zr + zi * zi) > 4.0)
 			break ;
@@ -72,11 +76,13 @@ int	julia(t_fractol *f, double zr, double zi)
 	double	tmp;
 	double	kr;
 	double	ki;
+	double	max_iter;
 
+	max_iter = f->max_iter;
 	kr = f->kr;
 	ki = f->ki;
 	i = 0;
-	while (i < MAX_ITER)
+	while (i < max_iter)
 	{
 		if ((zi * zi + zr * zr) > 4.0)
 			break ;

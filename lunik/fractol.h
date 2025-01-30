@@ -14,11 +14,11 @@
 # define FRACTOL_H
 
 // WINDOW
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 1000
+# define HEIGHT 1000
 
 // ITERATIONS
-# define MAX_ITER 80
+# define MAX_ITER 77
 
 // SET
 # define MANDELBROT 1
@@ -79,6 +79,7 @@ typedef struct 		s_fractol
 	double			rx;	// default value (init.c - init)
 	double			fx;	// default value (init.c - init)
 	double			max_iter;
+	double			modify_iter;
 	t_data			data;
 }					t_fractol;
 
@@ -86,17 +87,17 @@ typedef struct 		s_fractol
 void	init_struct(t_fractol *f);
 void	get_complex_range(t_fractol *f);
 void	init(t_fractol *f);
-void	init_img_again(t_fractol *f);
+// void	init_img_again(t_fractol *f);
 
 // render.c
 void	render(t_fractol *f);
 int		close_window(t_fractol *f);
 
 // sets
-int		mandelbrot(double cr, double ci);
+int		mandelbrot(t_fractol *f, double cr, double ci);
 int		julia(t_fractol *f, double zr, double zi);
 int		julia_shift(int x, int y, t_fractol *f);
-int		burning_ship(double cr, double ci);
+int		burning_ship(t_fractol *f, double cr, double ci);
 int		mandelbox(t_fractol *f, double cr, double ci);
 
 //  events.c
@@ -111,6 +112,5 @@ void	message(t_fractol *f, char *str1, char *str2);
 
 // args
 double	ft_atof(char *str);
-// void	get_color(t_fractol *f, int ac, char **av);
 
 # endif

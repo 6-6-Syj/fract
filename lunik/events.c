@@ -82,10 +82,8 @@ void move(t_fractol *f, double distance, char direction)
 int	key_event(int keycode, t_fractol *f)
 {
 	void	*mlx;
-	double	max_iter;
 
 	mlx = f->mlx;
-	max_iter = f->max_iter;
 	if (keycode == ESC)
 	{
 		close_window(f);
@@ -93,17 +91,17 @@ int	key_event(int keycode, t_fractol *f)
 	}
 	else if(keycode == PLUS)
 	{
-		max_iter += 1;
-		printf("max_iter =%f\n", max_iter);
+		f->modify_iter += 1;
+		printf("max_iter =%f\n", f->modify_iter);
 	}
-	else if(keycode == MINUS && max_iter > 0)
+	else if(keycode == MINUS && f->modify_iter > 0)
 	{
-		max_iter -= 1;
-		printf("max_iter =%f\n", max_iter);
+		f->modify_iter -= 1;
+		printf("max_iter =%f\n", f->modify_iter);
 	}
 	else if (keycode == ENTER)
 	{
-		f->max_iter = max_iter;
+		f->max_iter = f->modify_iter;
 		printf("f->max_iter = %f\n", f->max_iter);
 		render(f);
 	}

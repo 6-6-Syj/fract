@@ -80,7 +80,6 @@ static void	handle_args(t_fractol *f, int ac, char **av)
 	else if (f->set == JULIA && ac > 5)
 		help_msg(f);
 	get_julia_starting_values(f, ac, av);
-	// get_color(f, ac, av);
 }
 
 int	main(int ac, char **av)

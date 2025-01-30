@@ -29,7 +29,6 @@ SRCS =	init.c			\
 		render.c		\
 		events.c		\
 		mandelbox.c		\
-		colors.c		\
 		args.c			\
 		messages.c		\
 		sets.c			\

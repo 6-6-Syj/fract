@@ -39,11 +39,11 @@ static int	calculate_fractal(t_fractol *f, double pr, double pi)
 
 	nb_iter = 0;
 	if (f->set == MANDELBROT)
-		nb_iter = mandelbrot(pr, pi);
+		nb_iter = mandelbrot(f, pr, pi);
 	else if (f->set == JULIA)
 		nb_iter = julia(f, pr, pi);
 	else if (f->set == BURNING_SHIP)
-		nb_iter = burning_ship(pr, pi);
+		nb_iter = burning_ship(f, pr, pi);
 	else if (f->set == MANDELBOX)
 		nb_iter = mandelbox(f, pr, pi);
 	return (nb_iter);
@@ -53,7 +53,8 @@ static void	set_pixel_color(t_fractol *f, int x, int y, int nb_iter)
 {
 	double	max_iter;
 
-	max_iter = f->max_iter;
+	max_iter = f->modify_iter;
+	f->max_iter = f->modify_iter;
 	if (nb_iter == max_iter)
 		ft_put_pixel(&f->data, x, y, BLACK);
 	else

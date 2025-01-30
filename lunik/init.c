@@ -28,6 +28,7 @@ void	init_struct(t_fractol *f)
 	f->rx = 0;
 	f->fx = 0;
 	f->max_iter = 0;
+	f->modify_iter = 0;
 	f->data.img = NULL;
 	f->data.addr = NULL;
 	f->data.bits_per_pixel = 0;
@@ -116,6 +117,7 @@ void	init(t_fractol *f)
 	f->rx = 0.5;
 	f->fx = 1.0;
 	f->max_iter = MAX_ITER;
+	f->modify_iter = MAX_ITER;
 	get_complex_range(f);
 	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, f->name);
 	if (!f->win)
