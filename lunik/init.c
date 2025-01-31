@@ -17,6 +17,7 @@ void	init_struct(t_fractol *f)
 	f->mlx = NULL;
 	f->win = NULL;
 	f->set = -1;
+	f->zoom_julia = 0;
 	f->name = NULL;
 	f->min_r = 0;
 	f->max_r = 0;
@@ -45,6 +46,7 @@ void	get_complex_range(t_fractol *f)
 		f->max_r = 2.0;
 		f->min_i = -2.0;
 		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+		f->zoom_julia = 0;
 	}
 	else if (f->set == MANDELBOX)
 	{
@@ -54,25 +56,23 @@ void	get_complex_range(t_fractol *f)
 		f->min_i = -4.0;
 		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
-	else
+	else if (f->set == MANDELBROT)
 	{
-		if (f->set == MANDELBROT)
-			f->name = "Mandelbrot";
-		else if (f->set == BURNING_SHIP)
-			f->name = "Burning Ship";
+		f->name = "Mandelbrot";
 		f->min_r = -2.0;
 		f->max_r = 1.0;
 		f->max_i = -1.5;
 		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
+	else if (f->set == BURNING_SHIP)
+	{
+		f->name = "Burning Ship";
+		f->min_r = -2.2;
+		f->max_r = 0.8;
+		f->max_i = -2.0;
+		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+	}
 }
-
-/* init_img:
-*	Initializes an MLX image and a color palette. The color palette will
-*	be used to store every shade of color for every iteration number,
-*	and the color of each pixel will be stored in the image, which will
-*	then be displayed in the program window.
-*/
 
 static void	init_img(t_fractol *f)
 {
@@ -84,26 +84,6 @@ static void	init_img(t_fractol *f)
 	}
 }
 
-/* reinit_image:
-*	Cleanly reinitializes the MLX image if the color palette or
-*	fractal type is modified at runtime.
-*/
-
-// void	init_img_again(t_fractol *f)
-// {
-// 	if (f->mlx && f->img)
-// 		mlx_destroy_image(f->mlx, f->img);
-// 	if (f->palette)
-// 		free(f->palette);
-// 	if (f->buf)
-// 		f->buf = NULL;
-// 	init_img(f);
-// }
-
-/* init:
-*	Creates a new MLX instance, a new window and populates
-*	the fractol data structure with default values.
-*/
 void	init(t_fractol *f)
 {
 	f->mlx = mlx_init();

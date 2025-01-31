@@ -28,8 +28,8 @@ SRCS =	init.c			\
 		fractol.c		\
 		render.c		\
 		events.c		\
+		mandelbrot.c	\
 		mandelbox.c		\
-		args.c			\
 		messages.c		\
 		sets.c			\
 

@@ -12,56 +12,43 @@
 
 #include "fractol.h"
 
-/* print_fractal_options:
-*	Prints an explanation of the fractal options that can be specified
-*	at program launch.
-*/
 void	print_fractal_options(void)
 {
-	ft_putendl_fd("\033[36m________________________________________________\n\033[0m", 1);
+	ft_putendl_fd("\033[36m______________________________________________", 1);
+	ft_putendl_fd("\n\033[0m", 1);
 	ft_putendl_fd("Select a fractal with a letter:", 1);
-	ft_putendl_fd("\tM - Mandelbrot", 1);
-	ft_putendl_fd("\tJ - Julia", 1);
-	ft_putendl_fd("\tB - Burning Ship", 1);
-	ft_putendl_fd("\tX - Mandelbox", 1);
-	ft_putendl_fd("\e[36mUsage example:\t./fractol <type>\n\t\t./fractol M\e[0m", 1);
-	ft_putstr_fd("\nFor Julia, you may specify starting values for the\n", 1);
-	ft_putstr_fd("initial fractal. Values must be between\n", 1);
-	ft_putendl_fd("-2.0 and 2.0", 1);
-	ft_putendl_fd("\e[36mExample:\t", 1);
-	ft_putendl_fd("./fractol J\n\t\t./fractol J 0.285 0.01\e[0m", 1);
-	ft_putendl_fd("\033[36m________________________________________________\n", 1);
+	ft_putendl_fd("\tm - Mandelbrot", 1);
+	ft_putendl_fd("\tj - Julia", 1);
+	ft_putendl_fd("\tb - Burning Ship", 1);
+	ft_putendl_fd("\tx - Mandelbox", 1);
+	ft_putendl_fd("\n\e[36mEx:\t./fractol <type>\n\t./fractol M\e[0m", 1);
+	ft_putendl_fd("\nFor Julia, you may specify starting values for", 1);
+	ft_putendl_fd("the initial fractal. ", 1);
+	ft_putendl_fd("Default values set at -0.766667 -0.09.", 1);
+	ft_putendl_fd("Values must be between -2.0 and 2.0.", 1);
+	ft_putendl_fd("\n\e[36mEx:\t./fractol J\n\t./fractol J 0.285 0.01\e[0m", 1);
+	ft_putendl_fd("\033[36m______________________________________________", 1);
+	ft_putendl_fd("\n\033[0m", 1);
 }
 
-/* print_controls:
-*	Prints a list of program controls to the standard output when the program
-*	launches successfully.
-*/
 void	print_controls(void)
 {
 	ft_putendl_fd("\033[36m________________________________________________", 1);
 	ft_putendl_fd("\n\t\t\033[1\033[36m\033[4mCONTROLS\033[0m\n", 1);
 	ft_putendl_fd("Arrow keys:\t\t\t\033[0mMove view", 1);
 	ft_putendl_fd("Scroll wheel:\t\t\t\033[0mZoom in and out", 1);
+	ft_putendl_fd("SUPPR :\t\t\t\t\033[0mReset zoom", 1);
 	ft_putendl_fd("Left click:\t\t\t\033[0mShift Julia set", 1);
-	// ft_putendl_fd("1, 2, 3, 4:\t\t\t\033[0mSwitch fractals", 1);
+	ft_putendl_fd("1, 2, 3, 4:\t\t\t\033[0mSwitch fractals", 1);
 	ft_putendl_fd("ESC or close window:\t\t\033[0mQuit fract'ol", 1);
-	ft_putendl_fd("\033[36m________________________________________________\n", 1);
+	ft_putendl_fd("\033[36m________________________________________________\n\033[0m", 1);
 }
 
-/* help_msg:
-*	Prints a help message to the standard output to explain the program options.
-*/
-void	help_msg(t_fractol *f)
+void	help_msg()
 {
 	print_fractal_options();
-	close_window(f);
 }
 
-/* msg:
-*	Displays an error message to the standard error.
-*	Returns the provided error number.
-*/
 void	message(t_fractol *f, char *str1, char *str2)
 {
 	ft_putstr_fd("Fractol: ", 2);

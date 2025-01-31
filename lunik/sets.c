@@ -12,55 +12,32 @@
 
 #include "fractol.h"
 
-int	mandelbrot(t_fractol *f, double cr, double ci)
+int burning_ship(t_fractol *f, double cr, double ci)
 {
-	int		n;
-	double	zr;
-	double	zi;
-	double	tmp;
-	double	max_iter;
+    double zr;
+    double zi;
+    double zr2;
+    double zi2;
+    int n;
 
-	zr = 0;
-	zi = 0;
+	zr = 0.0;
+	zi = 0.0;
+	zr2 = 0.0;
+	zi2 = 0.0;
 	n = 0;
-	max_iter = f->max_iter;
-	while (n < max_iter)
-	{
-		if ((zr * zr + zi * zi) > 4.0)
-			break ;
-		tmp = 2 * zr * zi + ci;
-		zr = zr * zr - zi * zi + cr;
-		zi = tmp;
-		n++;
-	}
-	return (n);
+    while (n < f->max_iter)
+    {
+        zr2 = zr * zr;
+        zi2 = zi * zi;
+        if (zr2 + zi2 > 4.0)
+            return (n);
+        zi = fabs(2 * zr * zi) + ci;
+        zr = fabs(zr2 - zi2) + cr;
+        n++;
+    }
+    return (n);
 }
 
-int	burning_ship(t_fractol *f, double cr, double ci)
-{
-	int		n;
-	double	zr;
-	double	zi;
-	double	tmp;
-	double	max_iter;
-
-	zr = 0;
-	zi = 0;
-	n = 0;
-	max_iter = f->max_iter;
-	while (n < max_iter)
-	{
-		if ((zr * zr + zi * zi) > 4.0)
-			break ;
-		zr = fabs(zr);
-		zi = fabs(zi);
-		tmp = 2 * zr * zi + ci;
-		zr = zr * zr - zi * zi + cr;
-		zi = tmp;
-		n++;
-	}
-	return (n);
-}
 
 int	julia_shift(int x, int y, t_fractol *f)
 {
@@ -70,27 +47,30 @@ int	julia_shift(int x, int y, t_fractol *f)
 	return (0);
 }
 
-int	julia(t_fractol *f, double zr, double zi)
+int julia(t_fractol *f, double zr, double zi)
 {
-	int		i;
-	double	tmp;
-	double	kr;
-	double	ki;
-	double	max_iter;
+    double zr2, zi2;
+    int n = 0;
 
-	max_iter = f->max_iter;
-	kr = f->kr;
-	ki = f->ki;
-	i = 0;
-	while (i < max_iter)
-	{
-		if ((zi * zi + zr * zr) > 4.0)
-			break ;
-		tmp = 2 * zr * zi + kr;
-		zr = zr * zr - zi * zi + ki;
-		zi = tmp;
-		i++;
-	}
-	return (i);
+    while (n < f->max_iter)
+    {
+        zr2 = zr * zr;
+        zi2 = zi * zi;
+        if (zr2 + zi2 > 4.0)
+            return (n);
+
+        // Détection de cycle simplifiée
+        if (n > 0 && fabs(zr - f->kr) < 1e-6 && fabs(zi - f->ki) < 1e-6)
+            return (f->max_iter);  // Point probablement dans l'ensemble
+
+        zi = 2 * zr * zi + f->ki;
+        zr = zr2 - zi2 + f->kr;
+        n++;
+    }
+    return (n);
 }
+
+
+
+
 

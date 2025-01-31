@@ -29,10 +29,6 @@ static void	ft_put_pixel(t_data *data, int x, int y, int color)
 	}
 }
 
-/* calculate_fractal:
-*	Picks the correct fractal calculation function depending
-*	on the current fractal set.
-*/
 static int	calculate_fractal(t_fractol *f, double pr, double pi)
 {
 	int	nb_iter;
@@ -53,23 +49,13 @@ static void	set_pixel_color(t_fractol *f, int x, int y, int nb_iter)
 {
 	double	max_iter;
 
-	max_iter = f->modify_iter;
-	f->max_iter = f->modify_iter;
+	max_iter = f->max_iter;
 	if (nb_iter == max_iter)
 		ft_put_pixel(&f->data, x, y, BLACK);
 	else
 		ft_put_pixel(&f->data, x, y, ((double)nb_iter * WHITE / max_iter));
 }
 
-/* render:
-*	Iterates through each pixel of the window, translates the pixel's
-*	coordinates into a complex number to be able to calculate if that number
-*	is part of the fractal set or not.
-*	The number of iterations that complex number goes through before being
-*	rejected from the fractal set determines which color is applied to the pixel.
-*	Once all pixels have been assessed and added to the MLX image,
-*	this function displays the MLX image to the window.
-*/
 void	render(t_fractol *f)
 {
 	int		x;

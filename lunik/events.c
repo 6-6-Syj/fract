@@ -12,46 +12,6 @@
 
 #include "fractol.h"
 
-/* key_event_extend:
-*	Handles events from the keyboard keys:
-*		- 1, 2, 3, 4, 5: switch fractals
-*	This function is registered to an MLX hook and will
-*	automatically be called when the user does anything inside the
-*	program window with the keyboard.
-*	If a valid event is detected, settings are adjusted and the fractal
-*	gets redrawn.
-*/
-// static int	key_event_extend(int keycode, t_fractol *mlx)
-// {
-// 	if (keycode == KEY_ONE && mlx->set != MANDELBROT)
-// 		mlx->set = MANDELBROT;
-// 	else if (keycode == KEY_TWO && mlx->set != JULIA)
-// 		mlx->set = JULIA;
-// 	else if (keycode == KEY_THREE && mlx->set != BURNING_SHIP)
-// 		mlx->set = BURNING_SHIP;
-// 	else if (keycode == KEY_FOUR && mlx->set != TRICORN)
-// 		mlx->set = TRICORN;
-// 	else if (keycode == KEY_FIVE && mlx->set != MANDELBOX)
-// 		mlx->set = MANDELBOX;
-// 	else
-// 		return (1);
-// 	get_pxl_complex(mlx);
-// 	render(mlx);
-
-// 				if(keycode == PLUS)
-// 					f->max_iter += 1;
-// 				if(keycode == MINUS)
-// 					f->max_iter -= 1;
-// 				if(keycode == ENTER)
-// 				{
-// 					if (f->fractal == 1)
-// 						ft_mandelbrot(f);
-// 					if (f->fractal == 2)
-// 						ft_julia(f, f->complex.cr, f->complex.ci);
-// 					ft_put_image(f);
-// 				}
-// 	return (0);
-// }
 void move(t_fractol *f, double distance, char direction)
 {
     double width = f->max_r - f->min_r;
@@ -79,11 +39,48 @@ void move(t_fractol *f, double distance, char direction)
     }
 }
 
+int	key_event_change_set(int keycode, t_fractol *f)
+{
+	if ((keycode == KEY_ONE || keycode == NUM_1) && f->set != MANDELBROT)
+		f->set = MANDELBROT;
+	else if ((keycode == KEY_TWO || keycode == NUM_2) && f->set != JULIA)
+		f->set = JULIA;
+	else if ((keycode == KEY_THREE || keycode == NUM_3)
+		&& f->set != BURNING_SHIP)
+		f->set = BURNING_SHIP;
+	else if ((keycode == KEY_FOUR || keycode == NUM_4) && f->set != MANDELBOX)
+		f->set = MANDELBOX;
+	else
+		return (1);
+	get_complex_range(f);
+	render(f);
+	return (0);
+}
+
+int	key_event_move(int keycode, t_fractol *f)
+{
+	if (keycode == UP)
+		move(f, 0.05, 'U');
+	else if (keycode == DOWN)
+		move(f, 0.05, 'D');
+	else if (keycode == LEFT)
+		move(f, 0.05, 'L');
+	else if (keycode == RIGHT)
+		move(f, 0.05, 'R');
+	render(f);
+	return (0);
+}
+
 int	key_event(int keycode, t_fractol *f)
 {
 	void	*mlx;
 
 	mlx = f->mlx;
+	if (keycode == SUPPR)
+	{
+		get_complex_range(f);
+		render(f);
+	}
 	if (keycode == ESC)
 	{
 		close_window(f);
@@ -92,30 +89,23 @@ int	key_event(int keycode, t_fractol *f)
 	else if(keycode == PLUS)
 	{
 		f->modify_iter += 1;
-		printf("max_iter =%f\n", f->modify_iter);
+		printf("Iterations will be: %.0f\n", f->modify_iter);
 	}
-	else if(keycode == MINUS && f->modify_iter > 0)
+	else if(keycode == MINUS && f->modify_iter > 2)
 	{
 		f->modify_iter -= 1;
-		printf("max_iter =%f\n", f->modify_iter);
+		printf("Iterations will be: %.0f\n", f->modify_iter);
 	}
 	else if (keycode == ENTER)
 	{
 		f->max_iter = f->modify_iter;
-		printf("f->max_iter = %f\n", f->max_iter);
+		printf("Calculated with %.0f iterations\n", f->max_iter);
 		render(f);
 	}
-	else if (keycode == UP)
-		move(f, 0.05, 'U');
-	else if (keycode == DOWN)
-		move(f, 0.05, 'D');
-	else if (keycode == LEFT)
-		move(f, 0.05, 'L');
-	else if (keycode == RIGHT)
-		move(f, 0.05, 'R');
-	// else
-	// 	return (0);
-	render(f);
+	else if(!key_event_change_set(keycode, f))
+		return (1);
+	else if(!key_event_move(keycode, f))
+		return (1);
 	return (0);
 }
 
@@ -133,24 +123,30 @@ void zoom(t_fractol *f, int x, int y, double factor)
     f->max_i = f->min_i + new_height;
 }
 
-
 int mouse_event(int keycode, int x, int y, t_fractol *f)
 {
     if (keycode == WHEEL_UP)
-    {
+	{
         zoom(f, x, y, 0.9);
-    }
+		if(f->set == JULIA)
+			f->zoom_julia += 1;
+	}
     else if (keycode == WHEEL_DOWN)
-    {
+	{
         zoom(f, x, y, 1.1);
-    }
+		if(f->set == JULIA)
+			f->zoom_julia -= 1;
+	}
     else if (keycode == MOUSE_CLICK)
     {
         if (f->set == JULIA)
-            julia_shift(x, y, f);
+		{
+			if(f->zoom_julia > -22 && f->zoom_julia < 7)
+            	julia_shift(x, y, f);
+			else
+				ft_putendl_fd("Zoom out to shift another julia' set", 1);
+		}
     }
-    else
-        return (0);
     render(f);
     return (0);
 }

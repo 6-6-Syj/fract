@@ -14,11 +14,11 @@
 # define FRACTOL_H
 
 // WINDOW
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH 750
+# define HEIGHT 750
 
 // ITERATIONS
-# define MAX_ITER 77
+# define MAX_ITER 172
 
 // SET
 # define MANDELBROT 1
@@ -43,6 +43,16 @@
 # define PLUS 65451
 # define MINUS 65453
 # define ENTER 65421
+# define SUPPR 65288
+
+# define KEY_ONE 49
+# define KEY_TWO 50
+# define KEY_THREE 51
+# define KEY_FOUR 52
+# define NUM_1 65436
+# define NUM_2 65433
+# define NUM_3 65435
+# define NUM_4 65430
 
 // COLOR
 # define BLACK 0x00000000
@@ -53,6 +63,7 @@
 # include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
 # include "minilibx-linux/mlx_int.h"
+# include <ctype.h>
 
 typedef struct s_data
 {
@@ -68,6 +79,7 @@ typedef struct 		s_fractol
 	void			*mlx;
 	void			*win;
 	int				set;
+	int				zoom_julia;
 	char			*name;
 	double 			min_r;
 	double			max_r;
@@ -87,7 +99,6 @@ typedef struct 		s_fractol
 void	init_struct(t_fractol *f);
 void	get_complex_range(t_fractol *f);
 void	init(t_fractol *f);
-// void	init_img_again(t_fractol *f);
 
 // render.c
 void	render(t_fractol *f);
@@ -102,12 +113,14 @@ int		mandelbox(t_fractol *f, double cr, double ci);
 
 //  events.c
 int		key_event(int keycode, t_fractol *mlx);
+int		key_event_move(int keycode, t_fractol *f);
+int		key_event_change_set(int keycode, t_fractol *mlx);
 int		mouse_event(int keycode, int x, int y, t_fractol *mlx);
 
 // messages.c
 void	print_fractal_options(void);
 void	print_controls(void);
-void	help_msg(t_fractol *f);
+void	help_msg();
 void	message(t_fractol *f, char *str1, char *str2);
 
 // args
