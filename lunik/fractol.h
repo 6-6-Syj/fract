@@ -60,10 +60,10 @@
 
 # include <stdlib.h>
 # include <math.h>
+# include <ctype.h>
 # include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
 # include "minilibx-linux/mlx_int.h"
-# include <ctype.h>
 
 typedef struct s_data
 {
@@ -104,18 +104,20 @@ void	init(t_fractol *f);
 void	render(t_fractol *f);
 int		close_window(t_fractol *f);
 
-// sets
+// sets.c
 int		mandelbrot(t_fractol *f, double cr, double ci);
 int		julia(t_fractol *f, double zr, double zi);
 int		julia_shift(int x, int y, t_fractol *f);
 int		burning_ship(t_fractol *f, double cr, double ci);
 int		mandelbox(t_fractol *f, double cr, double ci);
 
-//  events.c
+// events.c
 int		key_event(int keycode, t_fractol *mlx);
-int		key_event_move(int keycode, t_fractol *f);
-int		key_event_change_set(int keycode, t_fractol *mlx);
 int		mouse_event(int keycode, int x, int y, t_fractol *mlx);
+
+// actions.c
+void	move(t_fractol *f, double distance, char direction);
+void	zoom(t_fractol *f, int x, int y, double factor);
 
 // messages.c
 void	print_fractal_options(void);

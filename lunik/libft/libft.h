@@ -72,6 +72,7 @@ int		ft_putstr(char *str, int fd);
 int		ft_putnbr(int n, int fd);
 int		ft_putnbr_u(unsigned int n);
 int		ft_putnbr_hex(unsigned int nbr, char *base);
+int		ft_putnbr_float(double n, int precision, int fd);
 int		ft_putadress(void *nbr, char *base);
 int		ft_putnbr_base_ul(unsigned long long nbr, char *base);
 

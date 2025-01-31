@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_support.c                                :+:      :+:    :+:   */
+/*   ft_printf_extend.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmagand <jmagand@student.42.fr>            #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -53,3 +53,41 @@ int	ft_putadress(void *nbr, char *base)
 	count += ft_putnbr_base_ul(res, base);
 	return (count);
 }
+
+// Le 6 par defaut, mais doit devenir le nombre de chiffre apres virgule (0 >= value && value <= 9 && format[i+1] == 'f')
+// FT_HANDLE_PRECISION
+
+int ft_putnbr_float(double n, int precision, int fd)
+{
+    int 		count;
+    long long 	int_part;
+    double 		frac_part;
+	int 		i;
+	int			digit;
+
+	count = 0;
+	digit = 0;
+    if (n < 0)
+    {
+        count += write(fd, "-", 1);
+        n = -n;
+    }
+    int_part = (long long)n;
+    frac_part = n - int_part;
+    count += ft_putnbr(int_part, fd);
+    if (precision > 0)
+    {
+        count += write(fd, ".", 1);
+        i = 0;
+        while (i < precision)
+        {
+            frac_part *= 10;
+            digit = (int)frac_part;
+            count += ft_putchar(digit + '0', fd);
+            frac_part -= digit;
+            i++;
+        }
+    }
+    return (count);
+}
+

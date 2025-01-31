@@ -46,6 +46,29 @@ void	get_set(t_fractol *f, char **av)
 	}
 }
 
+static int	validate_julia_params(int ac, char **av)
+{
+	if (ac == 3)
+	{
+		ft_putendl_fd("\033[31m\033[1mIncorrect arguments number\033[0m", 1);
+		ft_putendl_fd("\033[0m", 1);
+		return (0);
+	}
+	if (!ft_strchr(av[2], '.'))
+	{
+		ft_putendl_fd("\033[31m\033[1mNo '.' found in 1st param\033[0m", 1);
+		ft_putendl_fd("\033[0m", 1);
+		return (0);
+	}
+	if (!ft_strchr(av[3], '.'))
+	{
+		ft_putendl_fd("\033[31m\033[1mNo '.' found in 2nd param\033[0m", 1);
+		ft_putendl_fd("\033[0m", 1);
+		return (0);
+	}
+	return (1);
+}
+
 int	get_julia_starting_values(t_fractol *f, int ac, char **av)
 {
 	if (f->set != JULIA || ac == 2)
@@ -54,31 +77,20 @@ int	get_julia_starting_values(t_fractol *f, int ac, char **av)
 		f->ki = -0.09;
 		return (1);
 	}
-	if (ac == 3)
-	{
-		ft_putendl_fd("\033[31mIncorrect number of arguments\033[0m", 1);
+	if (!validate_julia_params(ac, av))
 		return (0);
-	}
-	if (!ft_strchr(av[2], '.'))
-	{
-		ft_putendl_fd("\033[31mNo '.' found in 1st parameter\033[0m", 1);
-		return (0);
-	}
-	if (!ft_strchr(av[3], '.'))
-	{
-		ft_putendl_fd("\033[31mNo '.' found in 2nd parameter\033[0m", 1);
-		return (0);
-	}
 	f->kr = ft_atof(av[2]);
 	f->ki = ft_atof(av[3]);
 	if (f->kr > 2.0 || f->kr < -2.0)
 	{
-		ft_putendl_fd("\033[31mValues must be between -2.0 & 2.0.\033[0m", 1);
+		ft_putendl_fd("\033[31m\033[1mError first parameter:", 1);
+		ft_putendl_fd("\033[4m\t-2.0 >= VALUE >= 2.0\n\033[0m", 1);
 		return (0);
 	}
 	if (f->ki >= 2.0 || f->ki <= -2.0)
 	{
-		ft_putendl_fd("\033[31mValues must be between -2.0 & 2.0.\033[0m", 1);
+		ft_putendl_fd("\033[31m\033[1mError second parameter:", 1);
+		ft_putendl_fd("\033[4m\t-2.0 > VALUE > 2.0\n\033[0m", 1);
 		return (0);
 	}
 	return (1);
@@ -90,13 +102,15 @@ int	handle_args(t_fractol *f, int ac, char **av)
 	if (f->set != JULIA && ac > 2)
 	{
 		print_fractal_options();
-		ft_putendl_fd("\033[31mIncorrect number of arguments\033[0m", 1);
+		ft_putendl_fd("\033[31m\033[1mIncorrect arguments number\033[0m", 1);
+		ft_putendl_fd("\033[0m", 1);
 		return (0);
 	}
 	else if (f->set == JULIA && ac > 5)
 	{
 		print_fractal_options();
-		ft_putendl_fd("\033[31mIncorrect number of arguments\033[0m", 1);
+		ft_putendl_fd("\033[31m\033[1mIncorrect arguments number\033[0m", 1);
+		ft_putendl_fd("\033[0m", 1);
 		return (0);
 	}
 	if (get_julia_starting_values(f, ac, av))

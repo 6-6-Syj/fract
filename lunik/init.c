@@ -37,6 +37,26 @@ void	init_struct(t_fractol *f)
 	f->data.endian = 0;
 }
 
+static void	get_complex_range_more(t_fractol *f)
+{
+	if (f->set == MANDELBROT)
+	{
+		f->name = "Mandelbrot";
+		f->min_r = -2.0;
+		f->max_r = 1.0;
+		f->max_i = -1.5;
+		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+	}
+	else if (f->set == BURNING_SHIP)
+	{
+		f->name = "Burning Ship";
+		f->min_r = -2.2;
+		f->max_r = 0.8;
+		f->max_i = -2.0;
+		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+	}
+}
+
 void	get_complex_range(t_fractol *f)
 {
 	if (f->set == JULIA)
@@ -56,22 +76,7 @@ void	get_complex_range(t_fractol *f)
 		f->min_i = -4.0;
 		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
-	else if (f->set == MANDELBROT)
-	{
-		f->name = "Mandelbrot";
-		f->min_r = -2.0;
-		f->max_r = 1.0;
-		f->max_i = -1.5;
-		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
-	}
-	else if (f->set == BURNING_SHIP)
-	{
-		f->name = "Burning Ship";
-		f->min_r = -2.2;
-		f->max_r = 0.8;
-		f->max_i = -2.0;
-		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
-	}
+	get_complex_range_more(f);
 }
 
 static void	init_img(t_fractol *f)

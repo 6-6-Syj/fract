@@ -50,7 +50,7 @@ SRCS = ft_atof.c		\
 	ft_putstr_fd.c		\
 	ft_printf.c			\
 	ft_printf_utils.c	\
-	ft_printf_support.c	\
+	ft_printf_extend.c	\
 	get_next_line.c		\
 
 CC = cc

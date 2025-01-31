@@ -28,6 +28,7 @@ SRCS =	init.c			\
 		args.c			\
 		render.c		\
 		events.c		\
+		actions.c		\
 		mandelbrot.c	\
 		mandelbox.c		\
 		messages.c		\

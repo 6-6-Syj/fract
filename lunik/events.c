@@ -12,36 +12,7 @@
 
 #include "fractol.h"
 
-void	move(t_fractol *f, double distance, char direction)
-{
-	double		width;
-	double		height;
-
-	width = f->max_r - f->min_r;
-	height = f->max_i - f->min_i;
-	if (direction == 'R')
-	{
-		f->min_r += width * distance;
-		f->max_r += width * distance;
-	}
-	else if (direction == 'L')
-	{
-		f->min_r -= width * distance;
-		f->max_r -= width * distance;
-	}
-	else if (direction == 'U')
-	{
-		f->min_i += height * distance;
-		f->max_i += height * distance;
-	}
-	else if (direction == 'D')
-	{
-		f->min_i -= height * distance;
-		f->max_i -= height * distance;
-	}
-}
-
-int	key_event_change_set(int keycode, t_fractol *f)
+static int	key_event_change_set(int keycode, t_fractol *f)
 {
 	if ((keycode == KEY_ONE || keycode == NUM_1) && f->set != MANDELBROT)
 		f->set = MANDELBROT;
@@ -59,7 +30,7 @@ int	key_event_change_set(int keycode, t_fractol *f)
 	return (0);
 }
 
-int	key_event_move(int keycode, t_fractol *f)
+static int	key_event_move(int keycode, t_fractol *f)
 {
 	if (keycode == UP)
 		move(f, 0.05, 'U');
@@ -73,11 +44,34 @@ int	key_event_move(int keycode, t_fractol *f)
 	return (0);
 }
 
+static int	key_event_iter(int keycode, t_fractol *f)
+{
+	if (keycode == PLUS)
+	{
+		f->modify_iter += 1;
+		printf("Iterations will be: %.0f\n", f->modify_iter);
+	}
+	else if (keycode == MINUS && f->modify_iter > 2)
+	{
+		f->modify_iter -= 1;
+		ft_printf("Iterations will be: %.0f\n", f->modify_iter);
+	}
+	else if (keycode == ENTER)
+	{
+		f->max_iter = f->modify_iter;
+		ft_printf("Calculated with %f iterations\n", f->max_iter);
+		render(f);
+	}
+	return (0);
+}
+
 int	key_event(int keycode, t_fractol *f)
 {
 	void	*mlx;
+	int		handled;
 
 	mlx = f->mlx;
+	handled = 0;
 	if (keycode == SUPPR)
 	{
 		get_complex_range(f);
@@ -88,44 +82,12 @@ int	key_event(int keycode, t_fractol *f)
 		close_window(f);
 		return (0);
 	}
-	else if (keycode == PLUS)
-	{
-		f->modify_iter += 1;
-		printf("Iterations will be: %.0f\n", f->modify_iter);
-	}
-	else if (keycode == MINUS && f->modify_iter > 2)
-	{
-		f->modify_iter -= 1;
-		printf("Iterations will be: %.0f\n", f->modify_iter);
-	}
-	else if (keycode == ENTER)
-	{
-		f->max_iter = f->modify_iter;
-		printf("Calculated with %.0f iterations\n", f->max_iter);
+	handled |= !key_event_move(keycode, f);
+	handled |= !key_event_iter(keycode, f);
+	handled |= !key_event_change_set(keycode, f);
+	if (handled)
 		render(f);
-	}
-	else if (!key_event_change_set(keycode, f))
-		return (1);
-	else if (!key_event_move(keycode, f))
-		return (1);
 	return (0);
-}
-
-void	zoom(t_fractol *f, int x, int y, double factor)
-{
-	double	mouse_r;
-	double	mouse_i;
-	double	new_width;
-	double	new_height;
-
-	mouse_r = f->min_r + (f->max_r - f->min_r) * x / WIDTH;
-	mouse_i = f->max_i - (f->max_i - f->min_i) * y / HEIGHT;
-	new_width = (f->max_r - f->min_r) * factor;
-	new_height = (f->max_i - f->min_i) * factor;
-	f->min_r = mouse_r - (mouse_r - f->min_r) * factor;
-	f->max_r = f->min_r + new_width;
-	f->min_i = mouse_i - (mouse_i - f->min_i) * factor;
-	f->max_i = f->min_i + new_height;
 }
 
 int	mouse_event(int keycode, int x, int y, t_fractol *f)

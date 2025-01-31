@@ -33,6 +33,9 @@ static int	ft_printf_args(va_list args, const char *format, size_t i)
 				"0123456789ABCDEF"));
 	else if (format[i] == '%')
 		return (ft_putchar('%', 1));
+	else if (format[i] == 'f')
+		return (ft_putnbr_float(va_arg(args, double), 6, 1));
+		// Le 6 par defaut, mais doit devenir le nombre de chiffre apres virgule (0 >= value && value <= 9 && format[i+1] == 'f')
 	return (0);
 }
 
