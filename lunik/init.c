@@ -82,14 +82,13 @@ static void	init_img(t_fractol *f)
 		ft_printf("Error creating image");
 		close_window(f);
 	}
-    f->data.addr = mlx_get_data_addr(f->data.img, &f->data.bits_per_pixel,
-                                       &f->data.line_length, &f->data.endian);
+	f->data.addr = mlx_get_data_addr(f->data.img, &f->data.bits_per_pixel,
+			&f->data.line_length, &f->data.endian);
 }
 
 void	init(t_fractol *f)
 {
 	f->mlx = mlx_init();
-
 	if (!f->mlx)
 	{
 		ft_printf("Error creating MLX instance");

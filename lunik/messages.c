@@ -33,7 +33,7 @@ void	print_fractal_options(void)
 
 void	print_controls(void)
 {
-	ft_putendl_fd("\033[36m________________________________________________", 1);
+	ft_putendl_fd("\033[36m______________________________________________", 1);
 	ft_putendl_fd("\n\t\t\033[1\033[36m\033[4mCONTROLS\033[0m\n", 1);
 	ft_putendl_fd("Arrow keys\t\tMove view", 1);
 	ft_putendl_fd("Scroll wheel\t\tZoom in and out", 1);
@@ -50,7 +50,7 @@ void	print_controls(void)
 
 void	print_help(void)
 {
-	ft_putendl_fd("\033[36m________________________________________________", 1);
+	ft_putendl_fd("\033[36m______________________________________________", 1);
 	ft_putendl_fd("\n\t\t\033[1\033[36m\033[4mCONTROLS\033[0m\n", 1);
 	ft_putendl_fd("Arrow keys\t\t\tMove view", 1);
 	ft_putendl_fd("Scroll wheel\t\t\tZoom in and out", 1);
@@ -71,4 +71,3 @@ void	message(t_fractol *f, char *str1, char *str2)
 	ft_putendl_fd(str2, 2);
 	close_window(f);
 }
-

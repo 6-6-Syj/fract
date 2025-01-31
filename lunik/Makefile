@@ -25,13 +25,14 @@ MLX_NAME = $(MLX_DIR)libmlx.a
 MLX_FLAGS = -L $(MLX_DIR) -lXext -lX11 -lmlx_Linux $(MLX_NAME)
 
 SRCS =	init.c			\
-		fractol.c		\
+		args.c			\
 		render.c		\
 		events.c		\
 		mandelbrot.c	\
 		mandelbox.c		\
 		messages.c		\
 		sets.c			\
+		main.c			\
 
 OBJS_DIR = obj/
 OBJS = $(SRCS:%.c=$(OBJS_DIR)%.o)

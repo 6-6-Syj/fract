@@ -67,21 +67,21 @@
 
 typedef struct s_data
 {
-    void	*img;
-    char	*addr;
-    int		bits_per_pixel;
-    int		line_length;
-    int		endian;
-} 				t_data;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
 
-typedef struct 		s_fractol
+typedef struct s_fractol
 {
 	void			*mlx;
 	void			*win;
 	int				set;
 	int				zoom_julia;
 	char			*name;
-	double 			min_r;
+	double			min_r;
 	double			max_r;
 	double			min_i;
 	double			max_i;
@@ -120,10 +120,12 @@ int		mouse_event(int keycode, int x, int y, t_fractol *mlx);
 // messages.c
 void	print_fractal_options(void);
 void	print_controls(void);
-void	help_msg();
 void	message(t_fractol *f, char *str1, char *str2);
 
-// args
-double	ft_atof(char *str);
+// args.c
+int		handle_args(t_fractol *f, int ac, char **av);
+int		type_cmp(char *av, char *str, char c);
+int		get_julia_starting_values(t_fractol *f, int ac, char **av);
+void	get_set(t_fractol *f, char **av);
 
-# endif
+#endif

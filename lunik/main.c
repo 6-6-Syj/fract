@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmagand <jmagand@student.42.fr>            #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-12 17:08:23 by jmagand           #+#    #+#             */
-/*   Updated: 2024-11-12 17:08:23 by jmagand          ###   ########.fr       */
+/*   Created: 2025-01-31 20:13:29 by jmagand           #+#    #+#             */
+/*   Updated: 2025-01-31 20:13:29 by jmagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int	main(int ac, char **av)
 {
-	size_t	i;
-	void	*arr;
+	t_fractol	f;
 
-	i = 0;
-	if ((size == 0 || nmemb == 0))
-		return (malloc(0));
-	if (nmemb * size / nmemb != size)
-		return (NULL);
-	arr = malloc(nmemb * size);
-	if (!arr)
-		return (arr);
-	while (i < nmemb * size)
+	if (ac < 2)
 	{
-		((unsigned char *) arr)[i] = 0;
-		i++;
+		print_fractal_options();
+		return (0);
 	}
-	return (arr);
+	init_struct(&f);
+	if (!(handle_args(&f, ac, av)))
+		return (0);
+	init(&f);
+	render(&f);
+	print_controls();
+	mlx_hook(f.win, 17, 1L << 0, close_window, &f);
+	mlx_key_hook(f.win, key_event, &f);
+	mlx_mouse_hook(f.win, mouse_event, &f);
+	mlx_loop(f.mlx);
+	return (0);
 }

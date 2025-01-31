@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.c                                          :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmagand <jmagand@student.42.fr>            #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-static int	type_cmp(char *av, char *str, char c)
+int	type_cmp(char *av, char *str, char c)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ static int	type_cmp(char *av, char *str, char c)
 	return (0);
 }
 
-static void	get_set(t_fractol *f, char **av)
+void	get_set(t_fractol *f, char **av)
 {
 	if (type_cmp(av[1], "mandelbrot", 'm'))
 		f->set = MANDELBROT;
@@ -46,7 +46,7 @@ static void	get_set(t_fractol *f, char **av)
 	}
 }
 
-static int	get_julia_starting_values(t_fractol *f, int ac, char **av)
+int	get_julia_starting_values(t_fractol *f, int ac, char **av)
 {
 	if (f->set != JULIA || ac == 2)
 	{
@@ -84,7 +84,7 @@ static int	get_julia_starting_values(t_fractol *f, int ac, char **av)
 	return (1);
 }
 
-static int	handle_args(t_fractol *f, int ac, char **av)
+int	handle_args(t_fractol *f, int ac, char **av)
 {
 	get_set(f, av);
 	if (f->set != JULIA && ac > 2)
@@ -99,29 +99,7 @@ static int	handle_args(t_fractol *f, int ac, char **av)
 		ft_putendl_fd("\033[31mIncorrect number of arguments\033[0m", 1);
 		return (0);
 	}
-	if(get_julia_starting_values(f, ac, av))
+	if (get_julia_starting_values(f, ac, av))
 		return (1);
-	return (0);
-}
-
-int	main(int ac, char **av)
-{
-	t_fractol	f;
-
-	if (ac < 2)
-	{
-		print_fractal_options();
-		return (0);
-	}
-	init_struct(&f); 				// init struct		// verify args
-	if (!(handle_args(&f, ac, av)))
-		return (0);
-	init(&f); 						// init window + default values
-	render(&f);						// render image
-	print_controls();				// prints help
-	mlx_hook(f.win, 17, 1L << 0, close_window, &f);
-	mlx_key_hook(f.win, key_event, &f);
-	mlx_mouse_hook(f.win, mouse_event, &f);
-	mlx_loop(f.mlx);
 	return (0);
 }

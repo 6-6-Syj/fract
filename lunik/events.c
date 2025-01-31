@@ -12,31 +12,33 @@
 
 #include "fractol.h"
 
-void move(t_fractol *f, double distance, char direction)
+void	move(t_fractol *f, double distance, char direction)
 {
-    double width = f->max_r - f->min_r;
-    double height = f->max_i - f->min_i;
+	double		width;
+	double		height;
 
-    if (direction == 'R')
-    {
-        f->min_r += width * distance;
-        f->max_r += width * distance;
-    }
-    else if (direction == 'L')
-    {
-        f->min_r -= width * distance;
-        f->max_r -= width * distance;
-    }
-    else if (direction == 'U')
-    {
-        f->min_i += height * distance;
-        f->max_i += height * distance;
-    }
-    else if (direction == 'D')
-    {
-        f->min_i -= height * distance;
-        f->max_i -= height * distance;
-    }
+	width = f->max_r - f->min_r;
+	height = f->max_i - f->min_i;
+	if (direction == 'R')
+	{
+		f->min_r += width * distance;
+		f->max_r += width * distance;
+	}
+	else if (direction == 'L')
+	{
+		f->min_r -= width * distance;
+		f->max_r -= width * distance;
+	}
+	else if (direction == 'U')
+	{
+		f->min_i += height * distance;
+		f->max_i += height * distance;
+	}
+	else if (direction == 'D')
+	{
+		f->min_i -= height * distance;
+		f->max_i -= height * distance;
+	}
 }
 
 int	key_event_change_set(int keycode, t_fractol *f)
@@ -86,12 +88,12 @@ int	key_event(int keycode, t_fractol *f)
 		close_window(f);
 		return (0);
 	}
-	else if(keycode == PLUS)
+	else if (keycode == PLUS)
 	{
 		f->modify_iter += 1;
 		printf("Iterations will be: %.0f\n", f->modify_iter);
 	}
-	else if(keycode == MINUS && f->modify_iter > 2)
+	else if (keycode == MINUS && f->modify_iter > 2)
 	{
 		f->modify_iter -= 1;
 		printf("Iterations will be: %.0f\n", f->modify_iter);
@@ -102,51 +104,54 @@ int	key_event(int keycode, t_fractol *f)
 		printf("Calculated with %.0f iterations\n", f->max_iter);
 		render(f);
 	}
-	else if(!key_event_change_set(keycode, f))
+	else if (!key_event_change_set(keycode, f))
 		return (1);
-	else if(!key_event_move(keycode, f))
+	else if (!key_event_move(keycode, f))
 		return (1);
 	return (0);
 }
 
-void zoom(t_fractol *f, int x, int y, double factor)
+void	zoom(t_fractol *f, int x, int y, double factor)
 {
-    double mouse_r = f->min_r + (f->max_r - f->min_r) * x / WIDTH;
-    double mouse_i = f->max_i - (f->max_i - f->min_i) * y / HEIGHT;
+	double	mouse_r;
+	double	mouse_i;
+	double	new_width;
+	double	new_height;
 
-    double new_width = (f->max_r - f->min_r) * factor;
-    double new_height = (f->max_i - f->min_i) * factor;
-
-    f->min_r = mouse_r - (mouse_r - f->min_r) * factor;
-    f->max_r = f->min_r + new_width;
-    f->min_i = mouse_i - (mouse_i - f->min_i) * factor;
-    f->max_i = f->min_i + new_height;
+	mouse_r = f->min_r + (f->max_r - f->min_r) * x / WIDTH;
+	mouse_i = f->max_i - (f->max_i - f->min_i) * y / HEIGHT;
+	new_width = (f->max_r - f->min_r) * factor;
+	new_height = (f->max_i - f->min_i) * factor;
+	f->min_r = mouse_r - (mouse_r - f->min_r) * factor;
+	f->max_r = f->min_r + new_width;
+	f->min_i = mouse_i - (mouse_i - f->min_i) * factor;
+	f->max_i = f->min_i + new_height;
 }
 
-int mouse_event(int keycode, int x, int y, t_fractol *f)
+int	mouse_event(int keycode, int x, int y, t_fractol *f)
 {
-    if (keycode == WHEEL_UP)
+	if (keycode == WHEEL_UP)
 	{
-        zoom(f, x, y, 0.9);
-		if(f->set == JULIA)
+		zoom(f, x, y, 0.9);
+		if (f->set == JULIA)
 			f->zoom_julia += 1;
 	}
-    else if (keycode == WHEEL_DOWN)
+	else if (keycode == WHEEL_DOWN)
 	{
-        zoom(f, x, y, 1.1);
-		if(f->set == JULIA)
+		zoom(f, x, y, 1.1);
+		if (f->set == JULIA)
 			f->zoom_julia -= 1;
 	}
-    else if (keycode == MOUSE_CLICK)
-    {
-        if (f->set == JULIA)
+	else if (keycode == MOUSE_CLICK)
+	{
+		if (f->set == JULIA)
 		{
-			if(f->zoom_julia == 0)
-            	julia_shift(x, y, f);
+			if (f->zoom_julia == 0)
+				julia_shift(x, y, f);
 			else
 				ft_putendl_fd("Zoom out to shift another julia' set", 1);
 		}
-    }
-    render(f);
-    return (0);
+	}
+	render(f);
+	return (0);
 }

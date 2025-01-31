@@ -82,7 +82,7 @@ void	render(t_fractol *f)
 	mlx_do_sync(f->mlx);
 }
 
-int		close_window(t_fractol *f)
+int	close_window(t_fractol *f)
 {
 	if (!f)
 		exit(0);
