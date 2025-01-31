@@ -50,7 +50,7 @@ $(NAME): $(OBJS)
 	@make -C $(MLX_DIR)
 # Compilation de l'exécutable final avec les objets et les bibliothèques
 # Tester de compiler avec -g3 (plus rapide apparement)
-	$(CC) $(FLAGS) -g3 -lm $(OBJS) -L$(LIBFT_DIR) $(LIBFT_NAME) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(FLAGS) -O3 -lm $(OBJS) -L$(LIBFT_DIR) $(LIBFT_NAME) $(MLX_FLAGS) -o $(NAME)
 	@echo "\n✅$(COLOR_BOLD)$(COLOR_GREEN) $(LIBFT_NAME) ✅\n✅ $(MLX_NAME) ✅\n✅ $(NAME) has been created$(COLOR_RESET) ✅\n"
 
 clean :

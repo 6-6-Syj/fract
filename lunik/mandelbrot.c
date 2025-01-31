@@ -56,8 +56,8 @@ int mandelbrot(t_fractol *f, double cr, double ci)
         zr2 = zr * zr;
         zi2 = zi * zi;
         if (zr2 + zi2 > 4.0)
-            return(n);
-        zi = 2 * zr * zi + ci;
+            return (n);
+        zi = (zr + zr) * zi + ci;
         zr = zr2 - zi2 + cr;
         n++;
     }

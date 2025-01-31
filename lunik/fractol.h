@@ -14,11 +14,11 @@
 # define FRACTOL_H
 
 // WINDOW
-# define WIDTH 750
-# define HEIGHT 750
+# define WIDTH 500
+# define HEIGHT 500
 
 // ITERATIONS
-# define MAX_ITER 172
+# define MAX_ITER 130
 
 // SET
 # define MANDELBROT 1

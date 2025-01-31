@@ -35,61 +35,87 @@ static void	get_set(t_fractol *f, char **av)
 		f->set = MANDELBROT;
 	else if (type_cmp(av[1], "julia", 'j'))
 		f->set = JULIA;
-	else if (type_cmp(av[1], "burning ship", 'b'))
+	else if (type_cmp(av[1], "burning_ship", 'b'))
 		f->set = BURNING_SHIP;
 	else if (type_cmp(av[1], "mandelbox", 'x'))
 		f->set = MANDELBOX;
 	else
 	{
-		help_msg();
+		print_fractal_options();
 		close_window(f);
 	}
 }
 
-static void	get_julia_starting_values(t_fractol *f, int ac, char **av)
+static int	get_julia_starting_values(t_fractol *f, int ac, char **av)
 {
 	if (f->set != JULIA || ac == 2)
 	{
 		f->kr = -0.766667;
 		f->ki = -0.09;
-		return ;
+		return (1);
 	}
 	if (ac == 3)
-		help_msg();
+	{
+		ft_putendl_fd("\033[31mIncorrect number of arguments\033[0m", 1);
+		return (0);
+	}
 	if (!ft_strchr(av[2], '.'))
-		help_msg();
+	{
+		ft_putendl_fd("\033[31mNo '.' found in 1st parameter\033[0m", 1);
+		return (0);
+	}
 	if (!ft_strchr(av[3], '.'))
-		help_msg();
+	{
+		ft_putendl_fd("\033[31mNo '.' found in 2nd parameter\033[0m", 1);
+		return (0);
+	}
 	f->kr = ft_atof(av[2]);
 	f->ki = ft_atof(av[3]);
 	if (f->kr > 2.0 || f->kr < -2.0)
-		help_msg();
+	{
+		ft_putendl_fd("\033[31mValues must be between -2.0 & 2.0.\033[0m", 1);
+		return (0);
+	}
 	if (f->ki >= 2.0 || f->ki <= -2.0)
-		help_msg();
+	{
+		ft_putendl_fd("\033[31mValues must be between -2.0 & 2.0.\033[0m", 1);
+		return (0);
+	}
+	return (1);
 }
 
-static void	handle_args(t_fractol *f, int ac, char **av)
+static int	handle_args(t_fractol *f, int ac, char **av)
 {
 	get_set(f, av);
-	if (f->set != JULIA && ac > 3)
-		help_msg();
+	if (f->set != JULIA && ac > 2)
+	{
+		print_fractal_options();
+		ft_putendl_fd("\033[31mIncorrect number of arguments\033[0m", 1);
+		return (0);
+	}
 	else if (f->set == JULIA && ac > 5)
-		help_msg();
-	get_julia_starting_values(f, ac, av);
+	{
+		print_fractal_options();
+		ft_putendl_fd("\033[31mIncorrect number of arguments\033[0m", 1);
+		return (0);
+	}
+	if(get_julia_starting_values(f, ac, av))
+		return (1);
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	t_fractol	f;
 
-
 	if (ac < 2)
 	{
-		help_msg();
+		print_fractal_options();
 		return (0);
 	}
-	init_struct(&f); 				// init struct
-	handle_args(&f, ac, av);		// verify args
+	init_struct(&f); 				// init struct		// verify args
+	if (!(handle_args(&f, ac, av)))
+		return (0);
 	init(&f); 						// init window + default values
 	render(&f);						// render image
 	print_controls();				// prints help

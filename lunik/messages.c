@@ -28,25 +28,40 @@ void	print_fractal_options(void)
 	ft_putendl_fd("Values must be between -2.0 and 2.0.", 1);
 	ft_putendl_fd("\n\e[36mEx:\t./fractol J\n\t./fractol J 0.285 0.01\e[0m", 1);
 	ft_putendl_fd("\033[36m______________________________________________", 1);
-	ft_putendl_fd("\n\033[0m", 1);
+	ft_putendl_fd("\033[0m", 1);
 }
 
 void	print_controls(void)
 {
 	ft_putendl_fd("\033[36m________________________________________________", 1);
 	ft_putendl_fd("\n\t\t\033[1\033[36m\033[4mCONTROLS\033[0m\n", 1);
-	ft_putendl_fd("Arrow keys:\t\t\t\033[0mMove view", 1);
-	ft_putendl_fd("Scroll wheel:\t\t\t\033[0mZoom in and out", 1);
-	ft_putendl_fd("SUPPR :\t\t\t\t\033[0mReset zoom", 1);
-	ft_putendl_fd("Left click:\t\t\t\033[0mShift Julia set", 1);
-	ft_putendl_fd("1, 2, 3, 4:\t\t\t\033[0mSwitch fractals", 1);
-	ft_putendl_fd("ESC or close window:\t\t\033[0mQuit fract'ol", 1);
-	ft_putendl_fd("\033[36m________________________________________________\n\033[0m", 1);
+	ft_putendl_fd("Arrow keys\t\tMove view", 1);
+	ft_putendl_fd("Scroll wheel\t\tZoom in and out", 1);
+	ft_putendl_fd("SUPPR\t\t\tReset zoom", 1);
+	ft_putendl_fd("Left click\t\tShift Julia set", 1);
+	ft_putendl_fd("1, 2, 3, 4\t\tSwitch fractals", 1);
+	ft_putendl_fd("ESC or close window\tQuit fract'ol", 1);
+	ft_putendl_fd("+ / -\t\t\tAdd or deduct\n\t\t\titeration number", 1);
+	ft_putendl_fd("ENTER\t\t\tCalculate fractal with", 1);
+	ft_putendl_fd("\t\t\tnew iteration number", 1);
+	ft_putendl_fd("\033[36m______________________________________________", 1);
+	ft_putendl_fd("\033[0m", 1);
 }
 
-void	help_msg()
+void	print_help(void)
 {
-	print_fractal_options();
+	ft_putendl_fd("\033[36m________________________________________________", 1);
+	ft_putendl_fd("\n\t\t\033[1\033[36m\033[4mCONTROLS\033[0m\n", 1);
+	ft_putendl_fd("Arrow keys\t\t\tMove view", 1);
+	ft_putendl_fd("Scroll wheel\t\t\tZoom in and out", 1);
+	ft_putendl_fd("SUPPR\t\t\t\tReset zoom", 1);
+	ft_putendl_fd("Left click\t\t\tShift Julia set", 1);
+	ft_putendl_fd("1, 2, 3, 4\t\t\tSwitch fractals", 1);
+	ft_putendl_fd("ESC or close window\t\tQuit fract'ol", 1);
+	ft_putendl_fd("+ / -\t\t\t\tAdd or deduct iteration nb", 1);
+	ft_putendl_fd("ENTER\t\t\t\tCalculate fractal with new iteration nb", 1);
+	ft_putendl_fd("\033[36m______________________________________________", 1);
+	ft_putendl_fd("\n\033[0m", 1);
 }
 
 void	message(t_fractol *f, char *str1, char *str2)

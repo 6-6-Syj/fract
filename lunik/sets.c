@@ -49,20 +49,19 @@ int	julia_shift(int x, int y, t_fractol *f)
 
 int julia(t_fractol *f, double zr, double zi)
 {
-    double zr2, zi2;
-    int n = 0;
+    double zr2;
+	double zi2;
+    int n;
 
+	n = 0;
     while (n < f->max_iter)
     {
         zr2 = zr * zr;
         zi2 = zi * zi;
         if (zr2 + zi2 > 4.0)
             return (n);
-
-        // Détection de cycle simplifiée
         if (n > 0 && fabs(zr - f->kr) < 1e-6 && fabs(zi - f->ki) < 1e-6)
-            return (f->max_iter);  // Point probablement dans l'ensemble
-
+            return (f->max_iter);
         zi = 2 * zr * zi + f->ki;
         zr = zr2 - zi2 + f->kr;
         n++;

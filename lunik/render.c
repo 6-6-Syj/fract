@@ -64,9 +64,6 @@ void	render(t_fractol *f)
 	double	pr;
 	double	pi;
 
-	f->data.img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
-    f->data.addr = mlx_get_data_addr(f->data.img, &f->data.bits_per_pixel,
-                                       &f->data.line_length, &f->data.endian);
 	y = 0;
 	while (y < HEIGHT)
 	{

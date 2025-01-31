@@ -141,7 +141,7 @@ int mouse_event(int keycode, int x, int y, t_fractol *f)
     {
         if (f->set == JULIA)
 		{
-			if(f->zoom_julia > -22 && f->zoom_julia < 7)
+			if(f->zoom_julia == 0)
             	julia_shift(x, y, f);
 			else
 				ft_putendl_fd("Zoom out to shift another julia' set", 1);
