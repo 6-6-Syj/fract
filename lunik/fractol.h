@@ -24,7 +24,6 @@
 # define MANDELBROT 1
 # define JULIA 2
 # define BURNING_SHIP 3
-# define MANDELBOX 4
 
 // MOUSE
 # define LEFT_CLICK 1

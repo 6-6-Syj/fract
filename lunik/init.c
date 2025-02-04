@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmagand <jmagand@student.42.fr>            #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-01-27 17:14:08 by jmagand           #+#    #+#             */
-/*   Updated: 2025-01-27 17:14:08 by jmagand          ###   ########.fr       */
+/*   Created: 2025-02-03 23:31:03 by jmagand           #+#    #+#             */
+/*   Updated: 2025-02-03 23:31:03 by jmagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,6 @@ static void	get_complex_range_more(t_fractol *f)
 		f->max_i = -1.5;
 		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
-	else if (f->set == BURNING_SHIP)
-	{
-		f->name = "Burning Ship";
-		f->min_r = -2.2;
-		f->max_r = 0.8;
-		f->max_i = -2.0;
-		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
-	}
 }
 
 void	get_complex_range(t_fractol *f)
@@ -68,14 +60,6 @@ void	get_complex_range(t_fractol *f)
 		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 		f->zoom_julia = 0;
 	}
-	else if (f->set == MANDELBOX)
-	{
-		f->name = "Mandelbox";
-		f->min_r = -4.0;
-		f->max_r = 4.0;
-		f->min_i = -4.0;
-		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
-	}
 	get_complex_range_more(f);
 }
 
@@ -84,7 +68,7 @@ static void	init_img(t_fractol *f)
 	f->data.img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
 	if (!(f->data.img))
 	{
-		ft_printf("Error creating image");
+		ft_putendl_fd("\033[31mError creating image\033[0m\n", 1);
 		close_window(f);
 	}
 	f->data.addr = mlx_get_data_addr(f->data.img, &f->data.bits_per_pixel,
@@ -93,10 +77,15 @@ static void	init_img(t_fractol *f)
 
 void	init(t_fractol *f)
 {
+	if (WIDTH == 0 || HEIGHT == 0)
+	{
+		ft_putendl_fd("\033[31mUnvalid size of window\033[0m\n", 1);
+		exit(1);
+	}
 	f->mlx = mlx_init();
 	if (!f->mlx)
 	{
-		ft_printf("Error creating MLX instance");
+		ft_putendl_fd("\033[31mError creating MLX instance\033[0m\n", 1);
 		close_window(f);
 	}
 	f->sx = 2.0;
@@ -108,7 +97,7 @@ void	init(t_fractol *f)
 	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, f->name);
 	if (!f->win)
 	{
-		ft_printf("Error creating window");
+		ft_putendl_fd("\033[31mError creating window\033[0m\n", 1);
 		close_window(f);
 	}
 	init_img(f);

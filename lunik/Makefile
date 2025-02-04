@@ -11,7 +11,6 @@ COLOR_RESET = \033[0m
 
 NAME = fractol
 
-# Répertoire, nom et header de la bibliothèque libft
 LIBFT_DIR = libft/
 LIBFT_NAME = $(LIBFT_DIR)libft.a
 HEADER = $(LIBFT_DIR)libft.h
@@ -19,7 +18,6 @@ HEADER = $(LIBFT_DIR)libft.h
 CC = cc
 FLAGS = -Wall -Werror -Wextra
 
-# Répertoire, nom et header de la bibliothèque mlx
 MLX_DIR = minilibx-linux/
 MLX_NAME = $(MLX_DIR)libmlx.a
 MLX_FLAGS = -L $(MLX_DIR) -lXext -lX11 -lmlx_Linux $(MLX_NAME)
@@ -30,7 +28,6 @@ SRCS =	init.c			\
 		events.c		\
 		actions.c		\
 		mandelbrot.c	\
-		mandelbox.c		\
 		messages.c		\
 		sets.c			\
 		main.c			\
@@ -46,12 +43,8 @@ $(OBJS_DIR)%.o: %.c $(HEADER) Makefile
 
 
 $(NAME): $(OBJS)
-# create libft.a
 	@make -C $(LIBFT_DIR)
-# create mlx.a
 	@make -C $(MLX_DIR)
-# Compilation de l'exécutable final avec les objets et les bibliothèques
-# Tester de compiler avec -g3 (plus rapide apparement)
 	$(CC) $(FLAGS) -O3 -lm $(OBJS) -L$(LIBFT_DIR) $(LIBFT_NAME) $(MLX_FLAGS) -o $(NAME)
 	@echo "\n✅$(COLOR_BOLD)$(COLOR_GREEN) $(LIBFT_NAME) ✅\n✅ $(MLX_NAME) ✅\n✅ $(NAME) has been created$(COLOR_RESET) ✅\n"
 

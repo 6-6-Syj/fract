@@ -12,37 +12,57 @@
 
 #include "libft.h"
 
-static int	ft_printf_args(va_list args, const char *format, size_t i)
+static int	ft_get_precision(const char *format, size_t *i)
 {
-	if (format[i] == 'c')
+	int	precision;
+
+	precision = -1;
+	if (format[*i] == '.')
+	{
+		(*i)++;
+		precision = 0;
+		while (format[*i] >= '0' && format[*i] <= '9')
+		{
+			precision = precision * 10 + (format[*i] - '0');
+			(*i)++;
+		}
+	}
+	return (precision);
+}
+
+static int	ft_printf_args(va_list args, const char *format, size_t *i)
+{
+	int	precision;
+
+	precision = ft_get_precision(format, i);
+	if (format[*i] == 'c')
 		return (ft_putchar(va_arg(args, int), 1));
-	else if (format[i] == 's')
+	else if (format[*i] == 's')
 		return (ft_putstr(va_arg(args, char *), 1));
-	else if (format[i] == 'i' || format[i] == 'd')
+	else if (format[*i] == 'i' || format[*i] == 'd')
 		return (ft_putnbr(va_arg(args, int), 1));
-	else if (format[i] == 'u')
+	else if (format[*i] == 'u')
 		return (ft_putnbr_u(va_arg(args, unsigned int)));
-	else if (format[i] == 'p')
+	else if (format[*i] == 'p')
 		return (ft_putadress(va_arg(args, void *),
 				"0123456789abcdef"));
-	else if (format[i] == 'x')
+	else if (format[*i] == 'x')
 		return (ft_putnbr_hex(va_arg(args, unsigned int),
 				"0123456789abcdef"));
-	else if (format[i] == 'X')
+	else if (format[*i] == 'X')
 		return (ft_putnbr_hex(va_arg(args, unsigned int),
 				"0123456789ABCDEF"));
-	else if (format[i] == '%')
+	else if (format[*i] == '%')
 		return (ft_putchar('%', 1));
-	else if (format[i] == 'f')
-		return (ft_putnbr_float(va_arg(args, double), 6, 1));
-		// Le 6 par defaut, mais doit devenir le nombre de chiffre apres virgule (0 >= value && value <= 9 && format[i+1] == 'f')
+	else if (format[*i] == 'f')
+		return (ft_putnbr_float(va_arg(args, double), precision, 1));
 	return (0);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int		i;
+	size_t	i;
 	int		count;
 
 	if (!format)
@@ -54,8 +74,8 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			count += ft_printf_args(args, format, (i + 1));
 			i++;
+			count += ft_printf_args(args, format, &i);
 		}
 		else
 			count += ft_putchar(format[i], 1);

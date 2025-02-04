@@ -20,7 +20,6 @@ void	print_fractal_options(void)
 	ft_putendl_fd("\tm - Mandelbrot", 1);
 	ft_putendl_fd("\tj - Julia", 1);
 	ft_putendl_fd("\tb - Burning Ship", 1);
-	ft_putendl_fd("\tx - Mandelbox", 1);
 	ft_putendl_fd("\n\e[36mEx:\t./fractol <type>\n\t./fractol M\e[0m", 1);
 	ft_putendl_fd("\nFor Julia, you may specify starting values for", 1);
 	ft_putendl_fd("the initial fractal. ", 1);

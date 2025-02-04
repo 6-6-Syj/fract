@@ -123,13 +123,13 @@ char	*get_next_line(int fd)
 // 	str = get_next_line(fd);
 // 	while (str)
 // 	{
-// 		printf("%s", str);
+// 		ft_printf("%s", str);
 // 		free(str);
 // 		str = get_next_line(fd);
-// 		printf("________________\n");
+// 		ft_printf("________________\n");
 // 	}
 // 	str = get_next_line(fd);
-// 	printf("%s", str);
+// 	ft_printf("%s", str);
 // 	free(str);
 // 	close(fd);
 // }

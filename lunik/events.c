@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmagand <jmagand@student.42.fr>            #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-01-27 17:13:41 by jmagand           #+#    #+#             */
-/*   Updated: 2025-01-27 17:13:41 by jmagand          ###   ########.fr       */
+/*   Created: 2025-02-03 22:45:20 by jmagand           #+#    #+#             */
+/*   Updated: 2025-02-03 22:45:20 by jmagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static int	key_event_change_set(int keycode, t_fractol *f)
 	else if ((keycode == KEY_THREE || keycode == NUM_3)
 		&& f->set != BURNING_SHIP)
 		f->set = BURNING_SHIP;
-	else if ((keycode == KEY_FOUR || keycode == NUM_4) && f->set != MANDELBOX)
-		f->set = MANDELBOX;
 	else
 		return (1);
 	get_complex_range(f);
@@ -49,17 +47,17 @@ static int	key_event_iter(int keycode, t_fractol *f)
 	if (keycode == PLUS)
 	{
 		f->modify_iter += 1;
-		printf("Iterations will be: %.0f\n", f->modify_iter);
+		ft_printf("Iterations will be: %.f\n", f->modify_iter);
 	}
 	else if (keycode == MINUS && f->modify_iter > 2)
 	{
 		f->modify_iter -= 1;
-		ft_printf("Iterations will be: %.0f\n", f->modify_iter);
+		ft_printf("Iterations will be: %.f\n", f->modify_iter);
 	}
 	else if (keycode == ENTER)
 	{
 		f->max_iter = f->modify_iter;
-		ft_printf("Calculated with %f iterations\n", f->max_iter);
+		ft_printf("Calculated with %.f iterations\n", f->max_iter);
 		render(f);
 	}
 	return (0);

@@ -40,8 +40,6 @@ static int	calculate_fractal(t_fractol *f, double pr, double pi)
 		nb_iter = julia(f, pr, pi);
 	else if (f->set == BURNING_SHIP)
 		nb_iter = burning_ship(f, pr, pi);
-	else if (f->set == MANDELBOX)
-		nb_iter = mandelbox(f, pr, pi);
 	return (nb_iter);
 }
 

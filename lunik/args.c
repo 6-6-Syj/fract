@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmagand <jmagand@student.42.fr>            #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-01-27 17:26:51 by jmagand           #+#    #+#             */
-/*   Updated: 2025-01-27 17:26:51 by jmagand          ###   ########.fr       */
+/*   Created: 2025-02-03 23:35:49 by jmagand           #+#    #+#             */
+/*   Updated: 2025-02-03 23:35:49 by jmagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	get_set(t_fractol *f, char **av)
 		f->set = JULIA;
 	else if (type_cmp(av[1], "burning_ship", 'b'))
 		f->set = BURNING_SHIP;
-	else if (type_cmp(av[1], "mandelbox", 'x'))
-		f->set = MANDELBOX;
 	else
 	{
 		print_fractal_options();
