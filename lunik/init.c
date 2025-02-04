@@ -47,6 +47,14 @@ static void	get_complex_range_more(t_fractol *f)
 		f->max_i = -1.5;
 		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
 	}
+		else if (f->set == BURNING_SHIP)
+	{
+		f->name = "Burning Ship";
+		f->min_r = -2.2;
+		f->max_r = 0.8;
+		f->max_i = -2.0;
+		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+	}
 }
 
 void	get_complex_range(t_fractol *f)
