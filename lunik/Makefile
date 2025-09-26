@@ -13,6 +13,7 @@ NAME = fractol
 
 LIBFT_DIR = libft/
 LIBFT_NAME = $(LIBFT_DIR)libft.a
+LIB_FLAGS = -L$(LIBFT_DIR) -lft
 HEADER = $(LIBFT_DIR)libft.h
 
 CC = cc
@@ -20,7 +21,7 @@ FLAGS = -Wall -Werror -Wextra
 
 MLX_DIR = minilibx-linux/
 MLX_NAME = $(MLX_DIR)libmlx.a
-MLX_FLAGS = -L $(MLX_DIR) -lXext -lX11 -lmlx_Linux $(MLX_NAME)
+MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lXrandr
 
 SRCS =	init.c			\
 		args.c			\
@@ -45,7 +46,7 @@ $(OBJS_DIR)%.o: %.c $(HEADER) Makefile
 $(NAME): $(OBJS)
 	@make -C $(LIBFT_DIR)
 	@make -C $(MLX_DIR)
-	$(CC) $(FLAGS) -O3 -lm $(OBJS) -L$(LIBFT_DIR) $(LIBFT_NAME) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(FLAGS) -O3 $(OBJS) $(MLX_FLAGS) $(LIB_FLAGS) -lm -o $(NAME)
 	@echo "\n✅$(COLOR_BOLD)$(COLOR_GREEN) $(LIBFT_NAME) ✅\n✅ $(MLX_NAME) ✅\n✅ $(NAME) has been created$(COLOR_RESET) ✅\n"
 
 clean :

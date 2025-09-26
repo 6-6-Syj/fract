@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmagand <jmagand@student.42.fr>            #+#  +:+       +#+        */
+/*   By: jmagand <jmagand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-03 22:45:20 by jmagand           #+#    #+#             */
-/*   Updated: 2025-02-03 22:45:20 by jmagand          ###   ########.fr       */
+/*   Created: 2025/02/03 22:45:20 by jmagand           #+#    #+#             */
+/*   Updated: 2025/09/26 16:43:02 by jmagand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ static int	key_event_iter(int keycode, t_fractol *f)
 
 int	key_event(int keycode, t_fractol *f)
 {
-	void	*mlx;
+	/* void	*mlx; */
 	int		handled;
 
-	mlx = f->mlx;
+	/* mlx = f->mlx; */
 	handled = 0;
 	if (keycode == SUPPR)
 	{
